@@ -74,17 +74,25 @@ def BeautifulSoup_Sort(req):
     for dlItem in fakenamegen_extra:
         dtItem = dlItem.find('dt')
         ddItem = dlItem.find('dd')
-        print(dtItem)
+        
         #Change Visa/MasterCard to CC#
-        if dtItem == "Visa":
-            print("Its a VISA")
-        elif dtItem == "MasterCard":
-            dtItem = "CC#"
-        else:
-            dict.update({dtItem.string:ddItem.string})
+        if 'Visa' in dtItem:
+            print("[!] Attempting to change Visa")
+            dtItem.string.replace('Visa', 'CCN')
+            print(dtItem)
+            print(type(dtItem))
+            print(ddItem)
+        elif 'MasterCard' in dtItem:
+            print("[!] Attempting to change MasterCard")
+            dtItem.string.replace('MasterCard', 'CCN')
+            print(dtItem)
+            print(type(dtItem))
+            print(ddItem)
+        
+        dict.update({dtItem.string:ddItem.string})
     
 
-    #pop 'QR Code' and SSN as they dont populate
+    #pop 'QR Code' and SSN as they dont populate correctly
     dict.pop('QR Code')
     dict.pop('SSN')
    
